@@ -1,0 +1,103 @@
+#api_server_ip: 10.84.7.42
+#api_server_port: 8082
+#auth_url: http://10.84.7.42:35357/v2.0
+#username: admin
+#password: contrail123
+#nova_db_password: c0ntrail123
+#db_host: 10.84.7.42
+#domain_name: default-domain
+tenant_name: cumulus-test-1
+#public_tenant: admin
+#public_vn: Public
+networks:
+    tenant:
+       cidr: 192.168.1.0/24
+       gateway: 192.168.1.128
+    private1:
+       cidr: 192.168.10.0/24
+    private2:
+       cidr: 192.168.11.0/24
+    ctrl1:
+       cidr: 192.168.2.0/24
+       forwarding_mode: l2
+       flood_unknown_unicast: True
+    ctrl2:
+       cidr: 192.168.2.0/24
+       forwarding_mode: l2
+       flood_unknown_unicast: True
+    fabric1:
+       cidr: 192.168.3.0/24
+       forwarding_mode: l2
+       flood_unknown_unicast: True
+    fabric2:
+       cidr: 192.168.3.0/24
+       forwarding_mode: l2
+       flood_unknown_unicast: True
+
+instances:
+  - name: R1_RE0
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    metadata:
+       foo: bar
+       foo1: bar1
+       gateway: 192.168.1.128
+    metadata_refs:
+       re0_ip: R1_RE0
+       re1_ip: R1_RE1
+    personality:
+       /tmp/hosts: /etc/hosts
+    private_networks:
+       - private1
+       - private2
+    ctrl_network: ctrl1
+  - name: R1_RE1
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    metadata_refs:
+       re0_ip: R1_RE0
+       re1_ip: R1_RE1
+    private_networks:
+       - private1
+    ctrl_network: ctrl1
+  - name: R1_FPC0
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    ctrl_network: ctrl1
+    fabric_network: fabric1
+  - name: R1_FPC1
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    ctrl_network: ctrl1
+    fabric_network: fabric1
+  - name: R2_RE0
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    metadata:
+       foo: bar
+       foo1: bar1
+    personality:
+       /tmp/hosts: /etc/hosts
+    private_networks:
+       - private1
+       - private2
+    ctrl_network: ctrl2
+  - name: R2_RE1
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    private_networks:
+       - private1
+    ctrl_network: ctrl2
+  - name: R2_FPC0
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    ctrl_network: ctrl2
+    fabric_network: fabric2
+  - name: R2_FPC1
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2
+    ctrl_network: ctrl2
+    fabric_network: fabric2
+  - name: cirros
+    image: 94ffe88d-7887-432f-8780-cf75f63d5f74
+    flavor: 2

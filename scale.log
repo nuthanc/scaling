@@ -1,0 +1,11 @@
+INFO:root:Time to create objects for project Projectde52 is 0:00:32.777035. Success % 100
+INFO:root:Time to create objects for project Project5BCD is 0:00:35.176463. Success % 100
+INFO:root:Time to create objects for project Project7bAB is 0:00:35.103969. Success % 100
+INFO:root:Time to create objects for project ProjectdD8E is 0:00:35.132527. Success % 100
+INFO:root:Time to create all projects 0:00:37.629917
+INFO:root:Cleaning up all the objects
+INFO:root:Time to delete objects for project Projectde52 is 0:00:05.339371. Success % 100
+INFO:root:Time to delete objects for project Project5BCD is 0:00:05.488369. Success % 100
+INFO:root:Time to delete objects for project Project7bAB is 0:00:05.340788. Success % 100
+INFO:root:Time to delete objects for project ProjectdD8E is 0:00:05.276695. Success % 100
+INFO:root:Time to delete all projects 0:00:06.544379

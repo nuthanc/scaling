@@ -2,7 +2,9 @@
 #python scale_v3.py --api_server_ip '10.204.216.64' --keystone_ip '10.204.216.150' --n_policies 5 --n_policy_rules 2  --vnc --cleanup --n_process 2
 #python scale_v3.py --api_server_ip '10.204.216.64' --keystone_ip '10.204.216.150' --n_sgs 5 --n_sg_rules 2  --vnc --cleanup --n_process 2
 #python scale_v3.py --api_server_ip '10.204.216.64' --keystone_ip '10.204.216.150' --n_fips 1200  --vnc --cleanup --n_process 120
-#python scale_v3.py --api_server_ip '10.204.216.64' --keystone_ip '10.204.216.150' --n_vns 1 --n_ports 10  --vnc --cleanup --n_process 10
+#python3 scale_v3.py --api_server_ip '192.168.7.29' --keystone_ip '192.168.7.13' --n_vns 1 --n_ports 10  --vnc --cleanup --n_process 10
+#python scale_v3.py --api_server_ip '192.168.7.29' --keystone_ip '192.168.7.13' --n_vns 1 --n_ports 1  --vnc --cleanup --n_process 1
+import pdb
 from servicechain import ServiceChain
 import argparse
 import random
@@ -16,7 +18,7 @@ import copy
 import signal
 import string
 #import MySQLdb
-from Queue import Empty
+from queue import Empty
 from netaddr import *
 from datetime import datetime
 from multiprocessing import Process, Queue
@@ -119,8 +121,8 @@ class ScaleTest(object):
         self.roleid = self.obj.get_role_id(role)
         if self._args.project:
             self.project_id = Openstack(self._args.auth_url,
-                                       self._args.username,
-                                       self._args.password,
+                                        self._args.admin_username,
+                                        self._args.admin_password,
                                        self._args.project).project_id
         self._args.computes = self.get_compute_hosts()
         self._args.timeout = 60 if self._args.rate \
@@ -282,6 +284,7 @@ class PerprojectWrapper(object):
 
     def get_handles(self):
         if self._args.vnc:
+            ForkedPdb().set_trace()
             self.obj = VNC(self._args.auth_url,
                            self._args.username,
                            self._args.password,
@@ -582,7 +585,7 @@ class Openstack(object):
     def get_session(self):
         self.auth =  ks_identity.v3.Password(auth_url=self.auth_url, username=self.username,
                      password=self.password, project_name=self.project,
-                     user_domain_id="default", project_domain_id="default")
+                     user_domain_name="admin_domain", project_domain_name="admin_domain")
 
         session = ks_session.Session(auth=self.auth)
         return session
@@ -1124,14 +1127,33 @@ def main():
     signal.signal(signal.SIGTERM, sig_handler)
     pargs = parse_cli(sys.argv[1:])
     obj = ScaleTest(pargs)
+    ForkedPdb().set_trace()
     obj.setUp()
     if pargs.cleanup:
         logger.info('Cleaning up all the objects')
         import pdb; pdb.set_trace()
         obj.cleanup()
 
+
+class ForkedPdb(pdb.Pdb):
+    """A Pdb subclass that may be used
+    from a forked multiprocessing child
+
+    """
+
+    def interaction(self, *args, **kwargs):
+        _stdin = sys.stdin
+        try:
+            sys.stdin = open('/dev/stdin')
+            pdb.Pdb.interaction(self, *args, **kwargs)
+        finally:
+            sys.stdin = _stdin
+
 if __name__ == '__main__':
     logging.basicConfig(filename='scale.log', filemode='w')
     logger=logging.getLogger()
     logger.setLevel(logging.INFO)
     main()
+
+
+

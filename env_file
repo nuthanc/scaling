@@ -1,0 +1,7 @@
+PYTHONPATH=/root/my_scaling/tools
+TEST_CONFIG_FILE=contrail_test_input.yaml
+EMAIL_SUBJECT=Ubuntu-sanity
+MX_GW_TEST=1
+PYTHON3=1
+TEST_RUN_CMD=bash -x run_tests.sh -m -U -s -T k8s_sanity
+CMD=python3 scale_v3.py --api_server_ip '192.168.7.29' --keystone_ip '192.168.7.13' --n_vns 1 --n_ports 1  --vnc --cleanup --n_process 1

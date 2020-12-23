@@ -588,7 +588,8 @@ class Openstack(object):
 
         session = ks_session.Session(auth=self.auth)
         return session
-def get_client(self):
+
+    def get_client(self):
         return ks_client.Client(session=self.get_session())
 
     def get_handle(self):

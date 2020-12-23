@@ -270,10 +270,11 @@ class ScaleTest(object):
 
     def delete(self, projects):
         for project_dict in projects:
+            ForkedPdb().set_trace()
             if project_dict.has_key('perprojectobj'):
                 project_dict['perprojectobj'].cleanup()
-#            if not self._args.project:
-#                self.obj.delete_project(project_dict['id'])
+            if not self._args.project:
+                self.obj.delete_project(project_dict['id'])
 
 class PerprojectWrapper(object):
     def __init__(self, args):

@@ -573,7 +573,7 @@ class Openstack(object):
         self.domain_id = domain_id
         self.keystone = self.get_client()
         self.session = self.keystone.session
-        ForkedPdb().set_trace()
+        # ForkedPdb().set_trace()
         self.project_id  =  self.keystone.projects.find(name=self.project, domain_id=domain_id).id
         ''' Get nova client handle '''
         self.nova = nova_client.Client('2',session=self.session,region_name=region_name)
@@ -951,8 +951,8 @@ def parse_cli(args):
                         help='Admin user name [admin]')
     parser.add_argument('--admin_password',
                         action='store',
-                        default='contrail123',
-                        help="Admin user's password [contrail123]")
+                        default='c0ntrail123',
+                        help="Admin user's password [c0ntrail123]")
     parser.add_argument('--admin_project',
                         action='store',
                         default='admin',
@@ -963,8 +963,8 @@ def parse_cli(args):
                         help='project user name [admin]')
     parser.add_argument('--password',
                         action='store',
-                        default='contrail123',
-                        help="project user's password [contrail123]")
+                        default='c0ntrail123',
+                        help="project user's password [c0ntrail123]")
     parser.add_argument('--mysql_passwd',
                         action='store',
                         default=None,

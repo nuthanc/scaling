@@ -35,6 +35,7 @@ from types import MethodType
 import threading
 import thread
 import logging
+import pdb
 
 lock = dict()
 def get_lock(key):
@@ -572,6 +573,7 @@ class Openstack(object):
         self.domain_id = domain_id
         self.keystone = self.get_client()
         self.session = self.keystone.session
+        ForkedPdb().set_trace()
         self.project_id  =  self.keystone.projects.find(name=self.project, domain_id=domain_id).id
         ''' Get nova client handle '''
         self.nova = nova_client.Client('2',session=self.session,region_name=region_name)
@@ -586,8 +588,7 @@ class Openstack(object):
 
         session = ks_session.Session(auth=self.auth)
         return session
-
-    def get_client(self):
+def get_client(self):
         return ks_client.Client(session=self.get_session())
 
     def get_handle(self):
@@ -1129,6 +1130,19 @@ def main():
         logger.info('Cleaning up all the objects')
         import pdb; pdb.set_trace()
         obj.cleanup()
+
+class ForkedPdb(pdb.Pdb):
+    """A Pdb subclass that may be used
+    from a forked multiprocessing child
+    """
+
+    def interaction(self, *args, **kwargs):
+        _stdin = sys.stdin
+        try:
+            sys.stdin = open('/dev/stdin')
+            pdb.Pdb.interaction(self, *args, **kwargs)
+        finally:
+            sys.stdin = _stdin
 
 if __name__ == '__main__':
     logging.basicConfig(filename='scale.log', filemode='w')

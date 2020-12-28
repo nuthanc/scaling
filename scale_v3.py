@@ -270,7 +270,7 @@ class ScaleTest(object):
 
     def delete(self, projects):
         for project_dict in projects:
-            ForkedPdb().set_trace()
+            # ForkedPdb().set_trace()
             if project_dict.has_key('perprojectobj'):
                 project_dict['perprojectobj'].cleanup()
             if not self._args.project:
@@ -376,6 +376,7 @@ class PerprojectWrapper(object):
                 self.__dict__[attr].update(parent.__dict__[attr])
 
     def start_create(self, index, queue):
+        # ForkedPdb().set_trace()
         parent_id = self.obj.id
         self.get_handles()
         self.obj.id = copy.deepcopy(parent_id)
@@ -390,6 +391,8 @@ class PerprojectWrapper(object):
                 for port_index in range(index, index+self._args.n_ports):
                     port_name = vn_name+'-Port'+str(port_index)
                     self.obj.create_port(vn_name, port_name)
+
+            # MSG Add code for Creating Sub interface
 
             # Create Security Group
             for sg_index in range(index, index+self._args.n_sgs):
@@ -830,6 +833,7 @@ class VNC(Openstack):
 
     def create_port(self, vn_name, port_name):
         ''' Create Port through VNC api '''
+        ForkedPdb().set_trace()
         port_obj = VirtualMachineInterface(port_name, parent_obj=self.project_obj)
         self.id.port_id[port_name] = port_obj.uuid = str(uuid.uuid4())
         port_obj.add_virtual_network(self.id.vn_obj[vn_name])

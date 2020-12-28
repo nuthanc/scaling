@@ -1,0 +1,27 @@
+[
+	{
+		"path": "$ROOTPATH$/scale_v3.py",
+		"bookmarks": [
+			{
+				"line": 227,
+				"column": 41,
+				"label": ""
+			},
+			{
+				"line": 315,
+				"column": 31,
+				"label": "pre_conf called in setUp"
+			},
+			{
+				"line": 356,
+				"column": 38,
+				"label": "process_calling_start_create"
+			},
+			{
+				"line": 832,
+				"column": 20,
+				"label": ""
+			}
+		]
+	}
+]

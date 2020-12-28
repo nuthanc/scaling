@@ -396,10 +396,11 @@ class PerprojectWrapper(object):
             for vn_name in self.obj.id.vn_uuid.keys():
                 vlans = list(range(4094))
                 vlan = vlans.pop() + 1
+                port_name = vn_name+'-Port'+str(vlan)
                 parent_vmi = self.obj.create_port(vn_name, port_name)
                 for sub_intf_index in range(index, index+self._args.n_subintfs):
                     sub_intf_name = vn_name+'-Sub-intf'+str(sub_intf_index)
-                    self.obj.create_sub_intf(vn_name, sub_intf_name, parent_vmi, vlan)
+                    self.obj.create_port(vn_name, sub_intf_name, parent_vmi=parent_vmi, vlan=vlan)
 
             # Create Security Group
             for sg_index in range(index, index+self._args.n_sgs):
@@ -838,11 +839,17 @@ class VNC(Openstack):
             self.id.vn_uuid[vn_name] = net_id
         self.id.vn_obj[vn_name] = self.vnc.virtual_network_read(fq_name=vn_obj.get_fq_name())
 
-    def create_port(self, vn_name, port_name):
+    def create_port(self, vn_name, port_name, vlan=None, parent_vmi=None):
         ''' Create Port through VNC api '''
         port_obj = VirtualMachineInterface(port_name, parent_obj=self.project_obj)
         self.id.port_id[port_name] = port_obj.uuid = str(uuid.uuid4())
         port_obj.add_virtual_network(self.id.vn_obj[vn_name])
+        if vlan is not None:
+            vmi_prop = VirtualMachineInterfacePropertiesType()
+            vmi_prop.set_sub_interface_vlan_tag(vlan)
+            port_obj.set_virtual_machine_interface_properties(vmi_prop)
+        if parent_vmi is not None:
+            port_obj.add_virtual_machine_interface(parent_vmi)
         self.vnc.virtual_machine_interface_create(port_obj)
         iip_id = str(uuid.uuid4())
         iip_obj = InstanceIp(name=iip_id)
@@ -852,15 +859,6 @@ class VNC(Openstack):
         self.vnc.instance_ip_create(iip_obj)
         return port_obj
         ForkedPdb().set_trace()
-
-    def create_sub_intf(self, vn_name, sub_intf_name, parent_vmi, vlan):
-        ''' Create Sub Port through VNC api '''
-        sub_port_obj = create_port(vn_name, sub_intf_name)
-        sub_port_obj.add_virtual_machine_interface(parent_vmi)
-        vmi_prop = VirtualMachineInterfacePropertiesType()
-        vmi_prop.set_sub_interface_vlan_tag(vlan)
-        sub_port_obj.set_virtual_machine_interface_properties(vmi_prop)
-
 
     def create_floatingip(self, ext_vn_uuid):
         ''' Create Floating IP using VNC api '''

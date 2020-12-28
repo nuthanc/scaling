@@ -147,7 +147,7 @@ class ScaleTest(object):
     def is_per_project_obj_reqd(self):
         if self._args.n_vns or self._args.n_vms or self._args.n_sgs or \
            self._args.n_sg_rules or self._args.n_routers or \
-           self._args.n_fips or self._args.n_ports or \
+           self._args.n_fips or self._args.n_ports or self._args.n_subintfs or\
            self._args.n_svc_templates or self._args.n_svc_chains or \
            self._args.n_policies or self._args.n_policy_rules:
             return True
@@ -392,7 +392,14 @@ class PerprojectWrapper(object):
                     port_name = vn_name+'-Port'+str(port_index)
                     self.obj.create_port(vn_name, port_name)
 
-            # MSG Add code for Creating Sub interface
+            # Create Sub interface
+            for vn_name in self.obj.id.vn_uuid.keys():
+                vlans = list(range(4094))
+                vlan = vlans.pop() + 1
+                parent_vmi = self.obj.create_port(vn_name, port_name)
+                for sub_intf_index in range(index, index+self._args.n_subintfs):
+                    sub_intf_name = vn_name+'-Sub-intf'+str(sub_intf_index)
+                    self.obj.create_sub_intf(vn_name, sub_intf_name, parent_vmi, vlan)
 
             # Create Security Group
             for sg_index in range(index, index+self._args.n_sgs):
@@ -843,7 +850,16 @@ class VNC(Openstack):
         iip_obj.add_virtual_network(self.id.vn_obj[vn_name])
         iip_obj.add_virtual_machine_interface(port_obj)
         self.vnc.instance_ip_create(iip_obj)
+        return port_obj
         ForkedPdb().set_trace()
+
+    def create_sub_intf(self, vn_name, sub_intf_name, parent_vmi, vlan):
+        ''' Create Sub Port through VNC api '''
+        sub_port_obj = create_port(vn_name, sub_intf_name)
+        sub_port_obj.add_virtual_machine_interface(parent_vmi)
+        vmi_prop = VirtualMachineInterfacePropertiesType()
+        vmi_prop.set_sub_interface_vlan_tag(vlan)
+        sub_port_obj.set_virtual_machine_interface_properties(vmi_prop)
 
 
     def create_floatingip(self, ext_vn_uuid):
@@ -1007,6 +1023,10 @@ def parse_cli(args):
                         action='store',
                         default='0', type=int,
                         help='No of Ports to create per VN [0]')
+    parser.add_argument('--n_subintfs',
+                        action='store',
+                        default='0', type=int,
+                        help='No of Sub-interfaces to create per Port [0]')
     parser.add_argument('--n_sgs',
                         action='store',
                         default='0', type=int,

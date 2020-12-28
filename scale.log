@@ -1,0 +1,5 @@
+INFO:root:Time to create objects for project ProjectBc32 is 0:00:01.856941. Success % 0
+INFO:root:Time to create all projects 0:00:03.966157
+INFO:root:Cleaning up all the objects
+INFO:root:Time to delete objects for project ProjectBc32 is 0:00:00.967532. Success % 0
+INFO:root:Time to delete all projects 0:00:01.469836

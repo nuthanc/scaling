@@ -215,7 +215,7 @@ class ScaleTest(object):
             for index in range(self._args.n_projects):
                 project_dict = {}
                 if create is True:
-                    self._args.project = random_string('Project')
+                    self._args.project = random_string('NutScale')
                     self.project_id = self.obj.create_project(self._args.project,domain_id='default')
                     self.obj.add_user_to_project(self.userid, self.roleid,
                                                 self.project_id)
@@ -402,8 +402,7 @@ class PerprojectWrapper(object):
                     sub_intf_name = vn_name+'-Sub-intf'+str(sub_intf_index)
                     self.obj.create_port(vn_name, sub_intf_name, parent_vmi=parent_vmi, vlan=vlan)
                     logger.info('Subinterface %s created with vlan %d', sub_intf_name, vlan)
-                    # logger.info('Created subinterface %s with vlan %s')
-                    # logger.info('Created subinterface %s with vlan id %d', (sub_intf_name, vlan))
+                    
 
             # Create Security Group
             for sg_index in range(index, index+self._args.n_sgs):

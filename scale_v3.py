@@ -395,10 +395,10 @@ class PerprojectWrapper(object):
             # Create Sub interface
             for vn_name in self.obj.id.vn_uuid.keys():
                 vlans = list(range(4094))
-                vlan = vlans.pop() + 1
-                port_name = vn_name+'-Port'+str(vlan)
+                port_name = vn_name+'-PortScale'
                 parent_vmi = self.obj.create_port(vn_name, port_name)
                 for sub_intf_index in range(index, index+self._args.n_subintfs):
+                    vlan = vlans.pop() + 1
                     sub_intf_name = vn_name+'-Sub-intf'+str(sub_intf_index)
                     self.obj.create_port(vn_name, sub_intf_name, parent_vmi=parent_vmi, vlan=vlan)
 

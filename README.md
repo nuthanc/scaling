@@ -2,6 +2,7 @@
 
 ### VNC API links
 * https://juniper.github.io/contrail-vnc/api-doc/html/library_details.html
+* VNC API Library tutorial: https://juniper.github.io/contrail-vnc/api-doc/html/tutorial_with_library.html
 
 ### sub-interface scaling
 * Docker cmd

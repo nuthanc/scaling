@@ -833,7 +833,6 @@ class VNC(Openstack):
 
     def create_port(self, vn_name, port_name):
         ''' Create Port through VNC api '''
-        ForkedPdb().set_trace()
         port_obj = VirtualMachineInterface(port_name, parent_obj=self.project_obj)
         self.id.port_id[port_name] = port_obj.uuid = str(uuid.uuid4())
         port_obj.add_virtual_network(self.id.vn_obj[vn_name])
@@ -844,6 +843,8 @@ class VNC(Openstack):
         iip_obj.add_virtual_network(self.id.vn_obj[vn_name])
         iip_obj.add_virtual_machine_interface(port_obj)
         self.vnc.instance_ip_create(iip_obj)
+        ForkedPdb().set_trace()
+
 
     def create_floatingip(self, ext_vn_uuid):
         ''' Create Floating IP using VNC api '''

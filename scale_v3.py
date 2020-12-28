@@ -401,6 +401,9 @@ class PerprojectWrapper(object):
                     vlan = vlans.pop() + 1
                     sub_intf_name = vn_name+'-Sub-intf'+str(sub_intf_index)
                     self.obj.create_port(vn_name, sub_intf_name, parent_vmi=parent_vmi, vlan=vlan)
+                    logger.info('Subinterface %s created with vlan %d', sub_intf_name, vlan)
+                    # logger.info('Created subinterface %s with vlan %s')
+                    # logger.info('Created subinterface %s with vlan id %d', (sub_intf_name, vlan))
 
             # Create Security Group
             for sg_index in range(index, index+self._args.n_sgs):

@@ -1,3 +1,8 @@
-INFO:root:Time to create objects for project Project7FDc is 0:00:03.262622. Success % 100
-INFO:root:Time to create all projects 0:00:05.252163
+INFO:root:Subinterface Project1AcE-VN0CecA-Sub-intf0 created with vlan 4094
+INFO:root:Subinterface Project1AcE-VN0CecA-Sub-intf1 created with vlan 4093
+INFO:root:Time to create objects for project Project1AcE is 0:00:04.632290. Success % 100
+INFO:root:Subinterface Projecte270-VN04e8C-Sub-intf0 created with vlan 4094
+INFO:root:Subinterface Projecte270-VN04e8C-Sub-intf1 created with vlan 4093
+INFO:root:Time to create objects for project Projecte270 is 0:00:05.205115. Success % 100
+INFO:root:Time to create all projects 0:00:07.445627
 INFO:root:Cleaning up all the objects

@@ -18,7 +18,7 @@
 ### Insights from Aswani
 * Scale per VN and per cluster
 * Need to increase timeout in parse_cli(to 1,80,000 more or less) 
-* Increase the subnet mask in create_VN(If mask size is 16, then no of subnets to 2^16 - 3)
+* Increase the subnet mask in create_VN(If mask size is 16, then no of subinterfaces to 2^16 - 3)
 * Give project as admin(--project admin) so that the processes create objects in the mentioned project
 
 ### Scale numbers from Aswani

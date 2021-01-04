@@ -14,6 +14,64 @@
   * 1 is Gateway's ip(254)
   * 1 is Broadcast ip(255)
   * This is in /24 network
+
+### Insights from Aswani
+* Scale per VN and per cluster
+* Need to increase timeout in parse_cli(to 1,80,000 more or less) 
+* Increase the subnet mask in create_VN(If mask size is 16, then no of subnets to 2^16 - 3)
+* Give project as admin(--project admin) so that the processes create objects in the mentioned project
+
+### Scale numbers from Aswani
+```txt
+Virtual Network(30 processes)
+
+300 vns = 15 sec
+3k  vns = 16 mins
+21k vns = 9.5hrs
+Every vn taking 19 sec after 21k
+After 10k vns every 1k added extra 3 min latency
+
+Ports(50 processes)
+
+1000 ports = 16 sec
+10k  ports = 13 min
+20k  ports = 16 min
+Total created 250k ports = ~5hrs
+
+floating_ips(50 processes)
+
+1500 fips = 140sec
+15k  fips = 23min
+36k  fips = 80 min
+Total created 52k fips = ~100min
+
+security group (50 processes)
+
+1500 porrs = 23 sec
+15k  ports = 310sec
+38k  ports = 18 min
+
+security group_rules rules(100 processes)
+
+3000 rules = 90 sec
+10 k rules = 6.5 min
+100k rules = 31 min
+200k rules = 65 min
+
+policy(50 processes)
+
+1000 policies = 19sec
+5k   policies = 4min
+25k  policies = 23min
+50k  policies = 49min
+
+policy rules(50 processes)
+
+3k  policy_rules = 4sec
+30k policy_rules = 59sec
+100K policy_rules per_tenant = 5min
+```
+
 ```sh
 [root@nodem14 nuthanc-scaling]# python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 252 --vnc --cleanup --n_process 1
 Process Process-1:1:

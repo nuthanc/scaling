@@ -9,6 +9,10 @@
 
 ### sub-interface scaling
 * I think **251** is the limit(From scale.log)
+  * 1 is Port's ip(252)
+  * 1 is Service Address ip(253)
+  * 1 is Gateway's ip(254)
+  * 1 is Broadcast ip(255)
 ```sh
 [root@nodem14 nuthanc-scaling]# python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 252 --vnc --cleanup --n_process 1
 Process Process-1:1:

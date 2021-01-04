@@ -9,6 +9,30 @@
 
 ### sub-interface scaling
 * I think **251** is the limit(From scale.log)
+```sh
+[root@nodem14 nuthanc-scaling]# python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 252 --vnc --cleanup --n_process 1
+Process Process-1:1:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.7/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+  File "/usr/lib64/python2.7/multiprocessing/process.py", line 114, in run
+    self._target(*self._args, **self._kwargs)
+  File "scale_v3.py", line 403, in start_create
+    self.obj.create_port(vn_name, sub_intf_name, parent_vmi=parent_vmi, vlan=vlan)
+  File "scale_v3.py", line 861, in create_port
+    self.vnc.instance_ip_create(iip_obj)
+  File "/usr/lib/python2.7/site-packages/vnc_api/vnc_api.py", line 58, in wrapper
+    return func(self, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/vnc_api/vnc_api.py", line 652, in _object_create
+    OP_POST, obj_cls.create_uri, data=json_body)
+  File "/usr/lib/python2.7/site-packages/vnc_api/vnc_api.py", line 1094, in _request_server
+    retry_after_authn=retry_after_authn, retry_count=retry_count)
+  File "/usr/lib/python2.7/site-packages/vnc_api/vnc_api.py", line 1170, in _request
+    raise BadRequest(status, content)
+BadRequest: Virtual-Network(['default-domain', 'NutScaleaF8c', 'NutScaleaF8c-VN0f0cb']) has exhausted subnet([])
+> /root/nuthanc-scaling/scale_v3.py(1159)main()
+-> obj.cleanup()
+```
 * Docker cmd
 ```sh
 docker run --name nuthan_test --entrypoint /bin/bash -v /root/nuthanc-scaling:/root/nuthanc-scaling --network=host -it bng-artifactory.juniper.net/contrail-nightly/contrail-test-test:2011.127

@@ -1,4 +1,4 @@
-# scaling
+# Scaling
 
 ### Important
 * Use only one process with ForkedPdb

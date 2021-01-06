@@ -9,8 +9,9 @@ docker run --name nuthan_test --entrypoint /bin/bash -v /root/nuthanc-scaling:/r
 
 python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_ports 1  --vnc --cleanup --n_process 1
 ```
-* python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 4094 --vnc --cleanup --n_process 1
-* python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 4094 --vnc --cleanup --n_process 1 --project admin
+python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 4094 --vnc --cleanup --n_process 1
+
+python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 4094 --vnc --cleanup --n_process 1 --project admin
 
 ### VNC API links
 * https://juniper.github.io/contrail-vnc/api-doc/html/library_details.html

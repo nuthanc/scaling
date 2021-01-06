@@ -384,7 +384,7 @@ class PerprojectWrapper(object):
             # Create virtual network
             for vn_index in range(index, index+self._args.n_vns):
                 vn_name = self.get_name('VN', vn_index)
-                self.obj.create_network(vn_name=vn_name)
+                self.obj.create_network(vn_name=vn_name, mask=16)
 
             # Create Ports
             for vn_name in self.obj.id.vn_uuid.keys():

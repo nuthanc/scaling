@@ -83,7 +83,7 @@ policy rules(50 processes)
 ```
 
 ```sh
-[root@nodem14 nuthanc-scaling]# python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 252 --vnc --cleanup --n_process 1
+[root@nodem14 nuthanc-scaling] python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 252 --vnc --cleanup --n_process 1
 Process Process-1:1:
 Traceback (most recent call last):
   File "/usr/lib64/python2.7/multiprocessing/process.py", line 258, in _bootstrap

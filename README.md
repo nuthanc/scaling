@@ -22,6 +22,8 @@ python scale_v3.py --api_server_ip '10.204.216.105' --keystone_ip '10.204.216.15
 * VNC API Library tutorial: https://juniper.github.io/contrail-vnc/api-doc/html/tutorial_with_library.html
 
 ### sub-interface scaling
+* Two sub interfaces under same primary port can't have same Vlan tag
+* VLAN has to be between 1 to 4094
 * I think **251** is the limit(From scale.log)
   * 1 is Port's ip(252)
   * 1 is Service Address ip(253)

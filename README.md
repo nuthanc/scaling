@@ -13,6 +13,10 @@ python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.14
 
 python scale_v3.py --api_server_ip '10.204.216.103' --keystone_ip '10.204.216.140' --n_vns 1 --n_subintfs 4094 --vnc --cleanup --n_process 1 --project admin
 
+For m16:
+python scale_v3.py --api_server_ip '10.204.216.105' --keystone_ip '10.204.216.159' --n_vns 1 --n_subintfs 4094 --vnc --cleanup --n_process 1 --project admin
+    resp = send(**kwargs)
+
 ### VNC API links
 * https://juniper.github.io/contrail-vnc/api-doc/html/library_details.html
 * VNC API Library tutorial: https://juniper.github.io/contrail-vnc/api-doc/html/tutorial_with_library.html

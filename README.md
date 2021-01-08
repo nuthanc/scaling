@@ -6,6 +6,20 @@
 * 10G port -> 1G 10 sub-interfaces
 * VLAN Id -> for identifying
 
+### Code for creating sub-interface
+```python
+# Create Sub interface
+            for vn_name in self.obj.id.vn_uuid.keys():
+                vlans = list(range(4094))
+                port_name = vn_name+'-PortScale'
+                parent_vmi = self.obj.create_port(vn_name, port_name)
+                for sub_intf_index in range(index, index+self._args.n_subintfs):
+                    vlan = vlans.pop() + 1
+                    sub_intf_name = vn_name+'-Sub-intf'+str(sub_intf_index)
+                    self.obj.create_port(vn_name, sub_intf_name, parent_vmi=parent_vmi, vlan=vlan)
+                    logger.info('Subinterface %s created with vlan %d', sub_intf_name, vlan)
+```
+
 ### Important
 * Use only one process with ForkedPdb
 

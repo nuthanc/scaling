@@ -1,4 +1,10 @@
-# Scaling
+# Sub-interfaceScaling
+
+### Sub-interface
+* 1 Phy port -> Multiple logic units
+* eth0 -> eth0.1, eth0.2
+* 10G port -> 1G 10 sub-interfaces
+* VLAN Id -> for identifying
 
 ### Important
 * Use only one process with ForkedPdb

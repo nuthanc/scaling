@@ -1,5 +1,8 @@
 # Sub-interfaceScaling
 
+### Also check the below tf-test repository for Automation using Ritam's script
+* https://github.com/nuthanc/tf-test/tree/sub_intf
+
 ### Sub-interface
 * 1 Phy port -> Multiple logic units
 * eth0 -> eth0.1, eth0.2

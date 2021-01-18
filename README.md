@@ -1,4 +1,4 @@
-# Sub-interfaceScaling
+# Sub-interface Scaling
 
 ### Also check the below tf-test repository for Automation using Ritam's script
 * https://github.com/nuthanc/tf-test/tree/sub_intf
